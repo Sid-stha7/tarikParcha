@@ -1,23 +1,21 @@
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Module, forwardRef } from "@nestjs/common";
-import { EventEmitterModule } from "@nestjs/event-emitter";
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { forwardRef, Module } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 //
-import { UsersService } from "./users.service";
-import { UserEntity } from "./entities/user.entity";
-import { UsersController } from "./users.controller";
+import { UsersService } from './users.service';
+import { UserEntity } from './entities/user.entity';
+import { UsersController } from './users.controller';
 
 //
-
-import { RolesModule } from "../roles/roles.module";
-
-//
-import { IsEmailAlreadyExistConstraint } from "../../validator/email.validator";
-import { IsUsernameAlreadyExistConstraint } from "../../validator/username.validator";
-import { IsEmailAlreadyExistUpdateConstraint } from "../../validator/user-update-email.validator";
-import { IsUsernameAlreadyExistUpdateConstraint } from "../../validator/username-update-email.validator";
+import { RolesModule } from '../roles/roles.module';
 
 //
-import { UserHelper } from "./helper/user.helper";
+// import { IsEmailAlreadyExistConstraint } from "../../validator/email.validator";
+// import { IsUsernameAlreadyExistConstraint } from "../../validator/username.validator";
+// import { IsEmailAlreadyExistUpdateConstraint } from "../../validator/user-update-email.validator";
+// import { IsUsernameAlreadyExistUpdateConstraint } from "../../validator/username-update-email.validator";
+//
+import { UserHelper } from './helper/user.helper';
 
 //
 @Module({
@@ -35,10 +33,10 @@ import { UserHelper } from "./helper/user.helper";
     //
     UserHelper,
     //
-    IsEmailAlreadyExistConstraint,
-    IsEmailAlreadyExistUpdateConstraint,
-    IsUsernameAlreadyExistConstraint,
-    IsUsernameAlreadyExistUpdateConstraint,
+    // IsEmailAlreadyExistConstraint,
+    // IsEmailAlreadyExistUpdateConstraint,
+    // IsUsernameAlreadyExistConstraint,
+    // IsUsernameAlreadyExistUpdateConstraint,
   ],
   exports: [UsersService],
 })

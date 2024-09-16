@@ -1,49 +1,38 @@
-import { DATABASE_TABLES } from 'src/constants/database.enum';
-import { BaseEntity } from 'src/models/BaseEntity';
-import UserCase from 'src/modules/users/entities/userCase.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CourtEntity } from '../../court/entities/court.entity';
+import { HearingEntity } from '../../hearing/entities/hearing.entity';
+import { BaseEntity } from '../../../models/BaseEntity';
 
-@Entity({ name: DATABASE_TABLES.CASE })
+@Entity()
 export class CaseEntity extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   @Column({ type: 'int' })
-  serial_number: number;
+  case_number: number;
 
-  @Column({ type: 'varchar' })
-  location: string;
+  @Column({ type: 'text' })
+  case_type: string;
 
-  @Column({ type: 'timestamp' })
-  registration_date: Date;
+  @Column({ type: 'text' })
+  case_title: string;
 
-  @Column({ type: 'varchar' })
-  issue: string;
+  @Column({ type: 'date' })
+  case_date: Date;
 
-  @Column({ type: 'varchar' })
-  issue_number: string;
+  @ManyToOne(() => CourtEntity, (court) => court.cases)
+  court: CourtEntity;
 
-  @Column({ type: 'varchar' })
-  party_opposition: string;
+  @Column({ type: 'uuid' })
+  judge_id: string;
 
-  @Column({ type: 'varchar' })
-  code_number: string;
+  @Column({ type: 'text' })
+  case_status: string;
 
-  @Column({ type: 'varchar' })
-  indication: string;
+  @Column({ type: 'text', nullable: true })
+  remarks: string;
 
-  @Column({ type: 'varchar' })
-  attorneys_view: string;
+  @Column({ type: 'uuid', array: true, nullable: true })
+  hearings: string[];
 
-  @Column({ type: 'varchar' })
-  details: string;
-
-  // Add more attributes as needed
-  @Column({ type: 'boolean', default: false, nullable: true })
-  isverified: boolean | null;
-
-  @Column({ type: 'int', nullable: true })
-  roleId: number | null;
-
-  @OneToMany(() => UserCase, (userCase) => userCase.caseEntity, {
-    eager: true,
-  })
-  userCase: UserCase[];
+  @OneToMany(() => HearingEntity, (hearing) => hearing.case)
+  case_hearings: HearingEntity[];
 }

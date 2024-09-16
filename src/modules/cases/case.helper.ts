@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { UpdateCaseDto } from './dto/update-case.dto';
 import { CaseEntity } from './entities/case.entity';
 import { CreateCaseDto } from './dto/create-case.dto';
@@ -7,96 +6,80 @@ import { CreateCaseDto } from './dto/create-case.dto';
 @Injectable()
 export class CaseHelper {
   caseFunc(caseEntity: CaseEntity, data: CreateCaseDto): CaseEntity {
-    if (data.serial_number) {
-      caseEntity.serial_number = data.serial_number;
+    if (data.case_number !== undefined) {
+      caseEntity.case_number = data.case_number;
     }
 
-    if (data.location) {
-      caseEntity.location = data.location;
+    if (data.case_type) {
+      caseEntity.case_type = data.case_type;
     }
 
-    if (data.registration_date) {
-      caseEntity.registration_date = data.registration_date;
+    if (data.case_title) {
+      caseEntity.case_title = data.case_title;
     }
 
-    if (data.issue) {
-      caseEntity.issue = data.issue;
+    if (data.case_date) {
+      caseEntity.case_date = data.case_date;
     }
 
-    if (data.issue_number) {
-      caseEntity.issue_number = data.issue_number;
-    }
-
-    if (data.party_opposition) {
-      caseEntity.party_opposition = data.party_opposition;
-    }
-
-    if (data.code_number) {
-      caseEntity.code_number = data.code_number;
-    }
-
-    if (data.indication) {
-      caseEntity.indication = data.indication;
-    }
-
-    if (data.attorneys_view) {
-      caseEntity.attorneys_view = data.attorneys_view;
-    }
-
-    if (data.details) {
-      caseEntity.details = data.details;
-    }
-
-    // if (data.isverified !== undefined) {
-    //   caseEntity.isverified = data.isverified;
+    // if (data.court_id) {
+    //   caseEntity.court_id = data.court_id;
     // }
 
-    // if (data.roleId !== undefined) {
-    //   caseEntity.roleId = data.roleId;
-    // }
+    if (data.judge_id) {
+      caseEntity.judge_id = data.judge_id;
+    }
+
+    if (data.case_status) {
+      caseEntity.case_status = data.case_status;
+    }
+
+    if (data.remarks) {
+      caseEntity.remarks = data.remarks;
+    }
+
+    if (data.hearings) {
+      caseEntity.hearings = data.hearings;
+    }
 
     return caseEntity;
   }
 
   caseUpdate(caseEntity: CaseEntity, data: UpdateCaseDto): CaseEntity {
-    if (data.serial_number !== undefined) {
-      caseEntity.serial_number = data.serial_number;
+    if (data.case_number !== undefined) {
+      caseEntity.case_number = data.case_number;
     }
 
-    if (data.location !== undefined) {
-      caseEntity.location = data.location;
+    if (data.case_type !== undefined) {
+      caseEntity.case_type = data.case_type;
     }
 
-    if (data.registration_date !== undefined) {
-      caseEntity.registration_date = data.registration_date;
+    if (data.case_title !== undefined) {
+      caseEntity.case_title = data.case_title;
     }
 
-    if (data.issue !== undefined) {
-      caseEntity.issue = data.issue;
+    if (data.case_date !== undefined) {
+      caseEntity.case_date = data.case_date;
+    }
+    //
+    // if (data.court_id !== undefined) {
+    //   caseEntity.court_id = data.court_id;
+    // }
+
+    if (data.judge_id !== undefined) {
+      caseEntity.judge_id = data.judge_id;
     }
 
-    if (data.issue_number !== undefined) {
-      caseEntity.issue_number = data.issue_number;
+    if (data.case_status !== undefined) {
+      caseEntity.case_status = data.case_status;
     }
 
-    if (data.party_opposition !== undefined) {
-      caseEntity.party_opposition = data.party_opposition;
+    if (data.remarks !== undefined) {
+      caseEntity.remarks = data.remarks;
     }
 
-    if (data.code_number !== undefined) {
-      caseEntity.code_number = data.code_number;
-    }
-
-    if (data.indication !== undefined) {
-      caseEntity.indication = data.indication;
-    }
-
-    if (data.attorneys_view !== undefined) {
-      caseEntity.attorneys_view = data.attorneys_view;
-    }
-
-    if (data.details !== undefined) {
-      caseEntity.details = data.details;
+    if (data.hearings !== undefined) {
+      caseEntity.hearings = data.hearings;
     }
 
     return caseEntity;

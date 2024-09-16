@@ -2,19 +2,17 @@ const argon2 = require('argon2');
 import { I18nService } from 'nestjs-i18n';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MailerService } from '@nestjs-modules/mailer';
-import { FindManyOptions, FindOptions, ILike, Repository } from 'typeorm';
+import { FindManyOptions, ILike, Repository } from 'typeorm';
 import {
   BadRequestException,
-  HttpException,
+  forwardRef,
   Inject,
   Injectable,
   NotFoundException,
-  forwardRef,
 } from '@nestjs/common';
 
 //
 import { UpdateMeDTO } from './dto/update-me.dto';
-import { InsertUserDto } from './dto/insert-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserPagination } from './dto/pagination-user.dto';
 
@@ -28,7 +26,6 @@ import { RolesService } from '../roles/roles.service';
 import { UserHelper } from './helper/user.helper';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { SendPasswordEmail } from './events/send-password.events';
-import { ListUsersQueryDto } from './dto/list-users.query.dto';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 
 //
@@ -45,7 +42,6 @@ export class UsersService {
     private readonly eventEmitter: EventEmitter2,
     //
     private readonly userHelper: UserHelper,
-
     @Inject(forwardRef(() => RolesService))
     private roleService: RolesService,
     private readonly mailService: MailerService,
@@ -66,7 +62,7 @@ export class UsersService {
     data: CreateUserDto,
     // creatorId: number,
     // isPlatform?: boolean,
-  ): Promise<{ message: string; data: IAuthUser }> {
+  ): Promise<{ message: string; data: any }> {
     // Checking if creator exists
 
     // Checking if manufactuerer exists
@@ -204,9 +200,7 @@ export class UsersService {
     return userInfo;
   }
 
-  async fetchAllUser(
-    query: UserPagination,
-  ): Promise<{ data: UserEntity[]; total: number }> {
+  async fetchAllUser(query: UserPagination): Promise<{ data: UserEntity[]; total: number }> {
     const take = Number(query.pageSize) || 10;
     const skip = (Number(query.pageNumber) - 1) * take || 0;
     let condition = [] || {};
@@ -372,10 +366,7 @@ export class UsersService {
     };
   }
 
-  async updateMe(
-    id: number,
-    data: UpdateMeDTO,
-  ): Promise<{ data: UserEntity; message: string }> {
+  async updateMe(id: number, data: UpdateMeDTO): Promise<{ data: UserEntity; message: string }> {
     const user = await this.userRepository.findOne({
       where: {
         id: id,
@@ -400,10 +391,7 @@ export class UsersService {
     };
   }
 
-  async findOneUser(
-    manufacturerId: number,
-    userId: number,
-  ): Promise<{ data: UserEntity }> {
+  async findOneUser(manufacturerId: number, userId: number): Promise<{ data: UserEntity }> {
     const data = await this.userRepository.findOne({
       where: {
         id: userId,
@@ -415,10 +403,7 @@ export class UsersService {
     return { data };
   }
 
-  async removeUser(
-    id: number,
-    manufactureId: number,
-  ): Promise<{ message: string }> {
+  async removeUser(id: number, manufactureId: number): Promise<{ message: string }> {
     const user = await this.userRepository.findOne({
       where: {
         id: id,

@@ -1,24 +1,16 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 //
 import { BaseEntity } from '../../../models/BaseEntity';
-import { AuthRoleEntity } from '../../roles/entities/role.entity';
 //
 import { DATABASE_TABLES } from '../../../constants/database.enum';
-import UserCase from './userCase.entity';
 
 //
 export enum UserStatusType {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
 }
+
 export enum UserType {
   LAWYER = 'lawyer',
   BASIC = 'basic',
@@ -75,10 +67,10 @@ export class UserEntity extends BaseEntity {
   // @Column({ nullable: true })
   // roleId?: number;
 
-  @OneToMany(() => UserCase, (caseEntity) => caseEntity.user, {
-    nullable: true,
-    cascade: ['insert', 'update', 'soft-remove'],
-    eager: true,
-  })
-  cases: UserCase[];
+  // @OneToMany(() => UserCase, (caseEntity) => caseEntity.user, {
+  //   nullable: true,
+  //   cascade: ['insert', 'update', 'soft-remove'],
+  //   eager: true,
+  // })
+  // cases: UserCase[];
 }

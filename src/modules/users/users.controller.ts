@@ -46,7 +46,6 @@ import { UpdateMeDTO } from './dto/update-me.dto';
 
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserPagination } from './dto/pagination-user.dto';
-import { ListUsersQueryDto } from './dto/list-users.query.dto';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 
 @UseGuards(JwtAuthGuard)
@@ -95,10 +94,7 @@ export class UsersController {
     description: 'Unauthorize Access',
     type: ErrorResponse,
   })
-  async updateMe(
-    @Body() body: UpdateMeDTO,
-    @Req() req: Request,
-  ): Promise<MeUserSerializer> {
+  async updateMe(@Body() body: UpdateMeDTO, @Req() req: Request): Promise<MeUserSerializer> {
     const out = await this.userService.updateMe(req.user.id, body);
 
     return plainToClass(MeUserSerializer, out, {
@@ -123,17 +119,12 @@ export class UsersController {
   })
   async createUser(
     @Body() body: CreateUserDto,
-
     @Req() req: Request,
   ): Promise<CreateUserSerializer> {
     console.log('controller', body);
     const { data, message } = await this.userService.createNewUser(body);
 
-    return plainToClass(
-      CreateUserSerializer,
-      { data, message },
-      { strategy: 'excludeAll' },
-    );
+    return plainToClass(CreateUserSerializer, { data, message }, { strategy: 'excludeAll' });
   }
 
   @ApiTags('Users')
@@ -151,9 +142,7 @@ export class UsersController {
     description: 'Unauthorize Access',
     type: ErrorResponse,
   })
-  async getAllUserOrg(
-    @Query() query: UserPagination,
-  ): Promise<UsersSerializer> {
+  async getAllUserOrg(@Query() query: UserPagination): Promise<UsersSerializer> {
     const { data, total } = await this.userService.fetchAllUser(query);
 
     return plainToClass(
@@ -211,11 +200,7 @@ export class UsersController {
   async remove(@Param('id') id: number): Promise<UserDeleteSerializer> {
     const { message } = await this.userService.toggleRemove(+id);
 
-    return plainToClass(
-      UserDeleteSerializer,
-      { message },
-      { strategy: 'excludeAll' },
-    );
+    return plainToClass(UserDeleteSerializer, { message }, { strategy: 'excludeAll' });
   }
 
   @ApiParam({
@@ -227,10 +212,7 @@ export class UsersController {
   @ApiTags('Manufacturer Users')
   @Post('/manufacturers/:manufacturerId/users')
   @AccessPermissions(PERMISSIONS.USER_CREATE)
-  async createManufacturerUser(
-    @Req() request: Request,
-    @Body() data: CreateUserDto,
-  ) {
+  async createManufacturerUser(@Req() request: Request, @Body() data: CreateUserDto) {
     console.log(data);
     const newUser = await this.userService.createNewUser(data);
 
