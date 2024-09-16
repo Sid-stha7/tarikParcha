@@ -1,28 +1,14 @@
-//
-
 import { NestFactory } from '@nestjs/core';
-import {
-  BadRequestException,
-  HttpStatus,
-  ValidationPipe,
-} from '@nestjs/common';
-import {
-  DocumentBuilder,
-  SwaggerCustomOptions,
-  SwaggerModule,
-} from '@nestjs/swagger';
-
-//
+import { BadRequestException, HttpStatus, ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
-
-//
 import { AppModule } from './app.module';
 import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
 import { ConfigService } from '@nestjs/config';
 import { useContainer } from 'class-validator';
 import * as cookieParser from 'cookie-parser';
-//
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
@@ -82,10 +68,7 @@ async function bootstrap() {
     .setTitle('Tarik Parcha')
     .setDescription('Description')
     .setVersion('1.0.0')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'Bearer' },
-      'access-token',
-    )
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Bearer' }, 'access-token')
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
@@ -114,4 +97,5 @@ async function bootstrap() {
     console.log('Server run on port: ' + port);
   });
 }
+
 bootstrap();
