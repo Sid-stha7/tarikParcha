@@ -3,6 +3,8 @@ export enum DATABASE_TABLES {
   USERS = 'users',
   CASE = 'case',
   USERCASERELATION = 'userCaseRelation',
+  NOTIFICATION_TOKEN = 'notification_token',
+  NOTIFICATION = 'notification',
 }
 
 export enum DATABASE_FK {
